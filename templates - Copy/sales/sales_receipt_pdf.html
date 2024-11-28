@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Receipt</title>
+    <style>
+        @page {
+            size: 80mm 150mm;
+            margin: 5mm;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            padding: 0;
+            margin: 0;
+            position: relative;
+        }
+        .container {
+            position: relative;
+        }
+        .receipt-details {
+            width: 70%;
+            margin-left: auto;
+        }
+        .qr-code {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            margin-left:160px;
+        }
+        .header {
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+        .store-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .store-info {
+            font-size: 10px;
+            margin-bottom: 10px;
+        }
+        .receipt-details p {
+            margin: 2px 0;
+        }
+        /* Updated table styles */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+        .items-table th, .items-table td {
+            text-align: left;
+            padding: 2px 3px;
+            border-bottom: 1px dotted #000;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 0;
+        }
+        .items-table th:first-child, 
+        .items-table td:first-child {
+            width: 50%;
+        }
+        .items-table th:nth-child(2), 
+        .items-table td:nth-child(2) {
+            width: 15%;
+            text-align: center;
+        }
+        .items-table th:last-child, 
+        .items-table td:last-child {
+            width: 35%;
+            text-align: right;
+        }
+        .totals {
+            margin-top: 10px;
+        }
+        .totals p {
+            display: flex;
+            justify-content: space-between;
+            margin: 3px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="qr-code">
+            {% if sale.qr_code %}
+                <img src="{{ sale.qr_code.url }}" alt="QR Code" width="80">
+            {% else %}
+               <img src="/media/qrcode.png" alt="QR Code" width="80">
+            {% endif %}
+        </div>
+
+        <div class="receipt-details">
+            <div class="header">
+                InnovationHub Softwares Ltd
+            </div>
+            
+            <div class="store-info">
+                Address: Innovation Softwares Ltd, Moi Avenue,<br>
+                Nairobi, Kenya, P.O. Box 12345-00100<br>
+                Phone: (+254) 712-345678
+            </div>
+
+            <div class="receipt-details">
+                <p style="font-family: 'Courier New', monospace;">Receipt #: <b>{{sale.order_id}}</b></p>
+                <p>Order Date: {{ sale.date_added|date:"F d, Y" }}</p>
+                <p>Customer: {{ sale.customer.first_name }} {{ sale.customer.last_name }}</p>
+            </div>
+
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detail in details %}
+                    <tr>
+                        <td title="{{ detail.product.name }}">{{ detail.product.name }}</td>
+                        <td>{{ detail.quantity }}</td>
+                        <td>ksh {{ detail.total_detail|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="totals">
+                <p><strong>Total:</strong> ksh {{ sale.grand_total|floatformat:2 }}</p>
+            </div>
+
+            <div class="footer">
+                <p>Thank you for your business!</p>
+            </div>
+
+            <div class="footer">
+                <p>InnovationHub Softwares</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

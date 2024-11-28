@@ -1,0 +1,199 @@
+
+{% load static %}
+<aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
+    <a href="{% url 'pos:index' %}" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
+      <i class="fe fe-x"><span class="sr-only"></span></i>
+    </a>
+    <nav class="vertnav navbar navbar-light">
+      <!-- nav bar -->
+      <div class="w-100 mb-4 d-flex">
+        <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="{% url 'pos:index' %}">
+          <svg version="1.1" id="logo" class="navbar-brand-img brand-sm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 120 120" xml:space="preserve">
+            <g>
+              <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
+              <polygon class="st0" points="96,69 33,69 42,51 105,51 	" />
+              <polygon class="st0" points="78,33 15,33 24,15 87,15 	" />
+            </g>
+          </svg>
+        </a>
+      </div>
+      <ul class="navbar-nav flex-fill w-100 mb-2">
+        <li class="nav-item dropdown">
+          <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-home fe-16"></i>
+            <span class="ml-3 item-text">Dashboard</span><span class="sr-only">(current)</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="dashboard">
+            <li class="nav-item active">
+              <a class="nav-link pl-3" href="{% url 'pos:index' %}"><span class="ml-1 item-text">Dashboard</span></a>
+            </li> 
+          </ul>
+        </li>
+      </ul>
+      <p class="text-muted nav-heading mt-4 mb-1">
+        <span>Products</span>
+      </p>
+      <ul class="navbar-nav flex-fill w-100 mb-2">
+        <li class="nav-item dropdown">
+          <a href="#ui-elements" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-box fe-16"></i>
+            <span class="ml-3 item-text">Product</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="{% url 'products:categories_list' %}"><span class="ml-1 item-text">Category List</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="{% url 'products:products_list' %}"><span class="ml-1 item-text">Product List </span></a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="{% url 'products:search_products' %}"><span class="ml-1 item-text">Search Product </span></a>
+            </li>
+            
+            
+          </ul>
+        </li>
+        <li class="nav-item w-100">
+          <a class="nav-link" href="{% url 'customers:customers_list' %}">
+            <i class="fe fe-layers fe-16"></i>
+            <span class="ml-3 item-text">Customers</span>
+            <span class="badge badge-pill badge-primary">New</span>
+          </a>
+        </li>
+
+        <li class="nav-item w-100">
+          <a class="nav-link" href="{% url 'sales:sales_list' %}">
+            <i class="fe fe-shopping-cart"></i>
+            <span class="ml-3 item-text">Sales</span>
+            
+          </a>
+        </li>
+
+
+        <li class="nav-item dropdown">
+          <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fa fa-shopping-cart fe-16"></i>
+            <span class="ml-3 item-text">Inventory Management</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="forms">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="#"><span class="ml-1 item-text">Basic Elements</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="#"><span class="ml-1 item-text">Advanced Elements</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="#"><span class="ml-1 item-text">Validation</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="#"><span class="ml-1 item-text">Wizard</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="#"><span class="ml-1 item-text">Layouts</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="#"><span class="ml-1 item-text">File upload</span></a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-grid fe-16"></i>
+            <span class="ml-3 item-text">Purchase Orders</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="tables">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="{% url 'sales:search_order'%}"><span class="ml-1 item-text">Search Order</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="#"><span class="ml-1 item-text">Advanced Tables</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="#"><span class="ml-1 item-text">Data Tables</span></a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-pie-chart fe-16"></i>
+            <span class="ml-3 item-text">Reports</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="charts">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="#"><span class="ml-1 item-text">Inline Chart</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="#"><span class="ml-1 item-text">Chartjs</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="#"><span class="ml-1 item-text">ApexCharts</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="#"><span class="ml-1 item-text">Datamaps</span></a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <p class="text-muted nav-heading mt-4 mb-1">
+        <span>Staff Management</span>
+      </p>
+      <ul class="navbar-nav flex-fill w-100 mb-2">
+        <li class="nav-item w-100">
+          <a class="nav-link" href="#">
+            <i class="fe fe-calendar fe-16"></i>
+            <span class="ml-3 item-text">Calendar</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-book fe-16"></i>
+            <span class="ml-3 item-text">Contacts</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="contact">
+            <a class="nav-link pl-3" href="{% url 'customers:search_customer'%}"><span class="ml-1">Search Customer</span></a>
+            <a class="nav-link pl-3" href="#"><span class="ml-1">Contact Grid</span></a>
+            <a class="nav-link pl-3" href="#"><span class="ml-1">New Contact</span></a>
+          </ul>
+        </li>
+        
+        
+        
+      </ul>
+      <p class="text-muted nav-heading mt-4 mb-1">
+        <span>Settings</span>
+      </p>
+      <ul class="navbar-nav flex-fill w-100 mb-2">
+       
+        <li class="nav-item dropdown">
+          <a href="#auth" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-shield fe-16"></i>
+            <span class="ml-3 item-text">Authentication</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="auth">
+            <a class="nav-link pl-3" href="{% url 'authentication:login'%}"><span class="ml-1">Login </span></a>
+            <a class="nav-link pl-3" href="{% url 'authentication:register'%}"><span class="ml-1">Register</span></a>
+           
+          </ul>
+        </li>
+        
+      </ul>
+      <p class="text-muted nav-heading mt-4 mb-1">
+        <span>Help & Support</span>
+      </p>
+      <ul class="navbar-nav flex-fill w-100 mb-2">
+        <li class="nav-item w-100">
+          <a class="nav-link" href="{%  url 'pos:help_and_support'%}">
+            <i class="fe fe-help-circle fe-16"></i>
+            <span class="ml-3 item-text">Getting Start</span>
+          </a>
+        </li>
+      </ul>
+      <div class="btn-box w-100 mt-4 mb-1">
+        <a href="{% url 'authentication:logout' %}" target="_blank" class="btn mb-2 btn-primary btn-lg btn-block">
+          <i class="fe fe-shopping-cart fe-12 mx-2"></i><span class="small">Logout</span>
+        </a>
+      </div>
+    </nav>
+  </aside>

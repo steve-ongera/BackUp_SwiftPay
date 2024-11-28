@@ -1,0 +1,127 @@
+{% extends "pos/base.html" %}
+
+
+{% block content %}
+<!--Go back-->
+<main role="main" class="main-content">
+    <div class="container-fluid">
+<div class="row ml-0 mb-3">
+    <a href="{% url 'pos:index' %}">
+        <button type="button" class="btn btn-info font-weight-bold">
+            <i class="fas fa-long-arrow-alt-left mr-2"></i>
+            Go back
+        </button>
+    </a>
+</div>
+
+<div class="row">
+    <div class="card col-md-12">
+        <div class="card-body">
+            <!-- Introduction Section -->
+        <div class="intro-section my-4">
+            <h3>Welcome to the Help Center</h3>
+            <p>
+                Welcome to the Help and Support Center for our Point of Sale (POS) system. Whether you're new to the system or need assistance with a specific issue, you'll find helpful resources here. Please explore the sections below to find the answers to your questions.
+            </p>
+            <p>
+                If you can't find a solution, our support team is always available to assist you.
+            </p>
+        </div>
+
+        <!-- Frequently Asked Questions Section -->
+        <div class="faq-section my-5">
+            <h3>Frequently Asked Questions (FAQs)</h3>
+            <p>Here are some common questions asked by users of our POS system. If you have any other questions, please feel free to contact us.</p>
+            
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <strong>Q: How do I reset my password?</strong>
+                    <p>A: To reset your password, click on the 'Forgot Password' link on the login page. Enter your registered email address, and we'll send you instructions to reset your password.</p>
+                </li>
+                <li class="list-group-item">
+                    <strong>Q: How do I generate a sales report?</strong>
+                    <p>A: To generate a sales report, go to the 'Reports' section from the main dashboard. You can filter the reports by date range, product, and other criteria. After filtering, click 'Generate Report' to download it.</p>
+                </li>
+                <li class="list-group-item">
+                    <strong>Q: How do I add a new product to the inventory?</strong>
+                    <p>A: Navigate to the 'Inventory' section and click 'Add New Product'. Fill in the product details such as name, price, quantity, and product category, then click 'Save' to add the product to your inventory.</p>
+                </li>
+                <li class="list-group-item">
+                    <strong>Q: How can I view my transaction history?</strong>
+                    <p>A: To view your transaction history, go to the 'Transactions' section. You can filter transactions by date or product, and view detailed information for each transaction.</p>
+                </li>
+                <li class="list-group-item">
+                    <strong>Q: How can I contact customer support?</strong>
+                    <p>A: You can contact our customer support via email at <a href="mailto:support@example.com">support@example.com</a> or by calling 123-456-7890. Our team is available 24/7 to assist you with any issues.</p>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Troubleshooting Tips Section -->
+        <div class="troubleshooting-section my-5">
+            <h3>Troubleshooting Tips</h3>
+            <p>If you're facing issues with the system, try the following solutions:</p>
+            
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <strong>System is running slow:</strong>
+                    <p>Check your internet connection. A slow or unstable connection can cause delays in transactions. If the issue persists, try refreshing the page or restarting your browser.</p>
+                </li>
+                <li class="list-group-item">
+                    <strong>Error during product checkout:</strong>
+                    <p>If you encounter an error during checkout, verify that all fields are filled correctly. Ensure that the product details and payment information are accurate. If the error continues, contact support for assistance.</p>
+                </li>
+                <li class="list-group-item">
+                    <strong>POS terminal not responding:</strong>
+                    <p>Make sure the terminal is powered on and properly connected to the network. Check the cables and network settings. If the issue persists, reboot the system or contact support for further assistance.</p>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Contact Information Section -->
+        <div class="contact-section my-5">
+            <h3>Contact Information</h3>
+            <p>If you can't find the answer you're looking for, don't hesitate to reach out to our customer support team.</p>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <strong>Email:</strong> <a href="mailto:support@example.com">support@example.com</a>
+                </li>
+                <li class="list-group-item">
+                    <strong>Phone:</strong> 123-456-7890 (Available 24/7)
+                </li>
+                <li class="list-group-item">
+                    <strong>Office Hours:</strong> Monday to Friday, 9 AM to 6 PM
+                </li>
+            </ul>
+        </div>
+
+        <!-- Links to Resources Section -->
+        <div class="resources-section my-5">
+            <h3>Additional Resources</h3>
+            <p>For further guidance, please explore the following resources:</p>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="https://example.com/user-manual" target="_blank">User Manual</a> - A comprehensive guide to using the POS system.
+                </li>
+                <li class="list-group-item">
+                    <a href="https://example.com/knowledge-base" target="_blank">Knowledge Base</a> - Search for solutions to common problems and FAQs.
+                </li>
+                <li class="list-group-item">
+                    <a href="https://example.com/video-tutorials" target="_blank">Video Tutorials</a> - Watch step-by-step tutorials on how to use the POS system effectively.
+                </li>
+            </ul>
+        </div>
+
+        <!-- Support Chat -->
+        <div class="support-chat my-5">
+            <h3>Live Support Chat</h3>
+            <p>Need immediate help? Our support team is available for live chat.</p>
+            <button class="btn btn-primary">Start Live Chat</button>
+        </div>
+    </div>
+  </div>
+</main>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

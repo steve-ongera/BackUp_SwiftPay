@@ -1,0 +1,40 @@
+/* General styling for pagination buttons */
+.paginate_button {
+    margin-left: 1%;
+    margin-top: 0;
+    padding: 5px 10px; /* Add some padding for better click area */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #f8f9fa; /* Light gray background */
+    color: #007bff; /* Default blue text */
+    cursor: pointer; /* Hand pointer on hover */
+    text-decoration: none; /* Remove underline from links */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover transition */
+}
+
+/* Hover effect for pagination buttons */
+.paginate_button:hover {
+    background-color: #007bff; /* Blue background on hover */
+    color: white; /* White text on hover */
+}
+
+/* Active pagination button styling */
+.paginate_button.current {
+    background-color: #007bff; /* Blue background for active button */
+    color: white; /* White text for active button */
+    border: none; /* Remove border */
+    cursor: default; /* No pointer for active button */
+}
+
+/* Styling for search input box */
+.dataTables_filter input {
+    border-radius: 5px;
+    border: 1px solid #ccc; /* Add a border */
+    padding: 5px 10px; /* Add padding for better appearance */
+    transition: border-color 0.3s ease; /* Smooth focus transition */
+}
+
+/* Focus effect for search input */
+.dataTables_filter input:focus {
+    border-color: #007bff; /* Blue border on focus */
+    outline: none; /* Remove default outline */
+}

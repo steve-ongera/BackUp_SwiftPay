@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sale Details</title>
+</head>
+<body>
+    <h1>Sale Details</h1>
+    <p><strong>Order ID:</strong> {{ sale.order_id }}</p>
+    <p><strong>Customer:</strong> {{ sale.customer }}</p>
+    <p><strong>Sub Total:</strong> {{ sale.sub_total }}</p>
+    <p><strong>Grand Total:</strong> {{ sale.grand_total }}</p>
+    <p><strong>Tax Amount:</strong> {{ sale.tax_amount }}</p>
+    <p><strong>Amount Paid:</strong> {{ sale.amount_payed }}</p>
+    <p><strong>Amount Change:</strong> {{ sale.amount_change }}</p>
+    <a href="{% url 'scan_qr_code' %}">Scan Another QR Code</a>
+</body>
+</html>
