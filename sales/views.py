@@ -269,9 +269,7 @@ def sales_report(request):
     return render(request, 'reports/sales_report.html', context)
 
 
-from django.shortcuts import render
-from django.db.models import Sum
-from .models import Product, SaleDetail
+
 
 def inventory_report(request):
     # Get all products

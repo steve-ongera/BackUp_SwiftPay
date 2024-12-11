@@ -1,0 +1,66 @@
+{% extends "pos/base.html" %}
+{% load static %}
+
+<!-- Page title -->
+{% block title %}Sales Report{% endblock title %}
+
+<!-- Specific Page CSS goes HERE -->
+{% block stylesheets %}
+<link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/pagination_buttons.css' %}" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% endblock stylesheets %}
+
+<!-- Page Heading -->
+{% block heading %}Sales Report{% endblock heading %}
+
+<!-- Page content -->
+{% block content %}
+<main role="main" class="main-content">
+    <div class="container-fluid">
+        <!-- Inventory Report -->
+        <div class="card shadow mb-12">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Inventory Report</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Total Sales</th>
+                                <th>Current Stock</th>
+                                <th>Inventory Valuation</th>
+                                <th>Low Stock Warning</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in inventory_data %}
+                            <tr>
+                                <td>{{ product.product_name }}</td>
+                                <td>{{ product.category }}</td>
+                                <td>{{ product.price|floatformat:2 }}</td>
+                                <td>{{ product.total_sales }}</td>
+                                <td>{{ product.current_stock }}</td>
+                                <td>{{ product.inventory_valuation|floatformat:2 }}</td>
+                                <td>
+                                    {% if product.low_stock_warning %}
+                                        <span class="badge badge-danger">Low Stock</span>
+                                    {% else %}
+                                        <span class="badge badge-success">Sufficient</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

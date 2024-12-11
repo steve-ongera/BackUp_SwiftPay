@@ -43,7 +43,7 @@ class Product(models.Model):
 
     price = models.FloatField(default=0)
 
-    #barcode_image = models.ImageField(upload_to='barcode_images/',  null=True,  blank=True )
+    initial_stock = models.IntegerField(default=0)  # Add this line to track initial stock
 
     class Meta:
         # Table's name
