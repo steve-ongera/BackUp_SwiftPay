@@ -57,6 +57,7 @@ class Product(models.Model):
         item['id'] = self.id
         item['text'] = self.name
         item['category'] = self.category.name
+        item['stock_quantity'] = self.initial_stock  # Renamed to stock_quantity
         item['quantity'] = 1
         item['total_product'] = 0
         return item
