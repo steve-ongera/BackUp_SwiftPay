@@ -1,0 +1,27 @@
+{% extends "pos/base.html" %}
+
+{% block content %}
+<main role="main" class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card shadow">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Delete Sale</h6>
+          </div>
+          <div class="card-body">
+            <p>Are you sure you want to delete the sale for <b> {{ sale.customer.first_name  }} {{ sale.customer.last_name  }} </b> with Receipt <b> {{ sale.order_id  }} </b>?</p>
+            <form method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">Delete</button>
+              <a href="{% url 'sales:sales_details' sale.id %}" class="btn btn-secondary">View</a>
+          
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

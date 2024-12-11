@@ -13,6 +13,11 @@ from .models import Sale, SaleDetail
 import json
 from io import BytesIO
 from django.db.models import Sum, Count
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from .models import Sale, SaleDetail
+from .forms import SaleForm  # Create a form for the sale model
+from django.http import HttpResponse
 
 
 
@@ -113,6 +118,46 @@ def sales_details_view(request, sale_id):
         return redirect('sales:sales_list')
 
 
+# Update Sale View
+def sale_update_view(request, sale_id):
+    sale = get_object_or_404(Sale, id=sale_id)
+    customers = Customer.objects.all()
+    if request.method == 'POST':
+        form = SaleForm(request.POST, request.FILES, instance=sale)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Sale updated successfully!')
+            return redirect('sales:sales_details', sale_id=sale.id)
+    else:
+        form = SaleForm(instance=sale)
+
+    context = {
+        "sale": sale,
+        "form": form,
+        "customers": customers,
+    }
+    return render(request, "sales/sale_update.html", context)
+
+# Delete Sale View
+def sale_delete_view(request, sale_id):
+    try:
+        sale = get_object_or_404(Sale, id=sale_id)
+
+        if request.method == 'POST':
+            sale.delete()
+            messages.success(request, 'Sale deleted successfully!')
+            return redirect('sales:sales_list')
+
+        context = {
+            "sale": sale
+        }
+
+        return render(request, "sales/sale_delete.html", context)
+
+    except Exception as e:
+        messages.error(request, 'There was an error deleting the sale!', extra_tags="danger")
+        print(e)
+        return redirect('sales:sales_list')
 
 def link_callback(uri, rel):
     """
@@ -314,3 +359,15 @@ def inventory_report(request):
     }
 
     return render(request, 'reports/inventory_report.html', context)
+
+
+def latest_orders_view(request):
+    # Fetch all orders ordered by `date_added` (latest first)
+    latest_orders = Sale.objects.all().order_by('-date_added')
+
+    # Pass the orders to the template
+    context = {
+        'latest_orders': latest_orders,
+    }
+
+    return render(request, 'sales/latest_orders.html', context)
