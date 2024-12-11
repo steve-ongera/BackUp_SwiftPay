@@ -267,3 +267,52 @@ def sales_report(request):
     }
 
     return render(request, 'reports/sales_report.html', context)
+
+
+from django.shortcuts import render
+from django.db.models import Sum
+from .models import Product, SaleDetail
+
+def inventory_report(request):
+    # Get all products
+    products = Product.objects.all()
+
+    # Initialize a list to store the data we want to display
+    inventory_data = []
+
+    # Threshold for low stock (you can adjust this value based on your requirements)
+    low_stock_threshold = 10
+
+    # Loop through each product and calculate the stock details
+    for product in products:
+        # Get total sales quantity for this product
+        total_sales = SaleDetail.objects.filter(product=product).aggregate(total_sales=Sum('quantity'))['total_sales'] or 0
+        
+        # Assume the current stock is a value that is either fetched from a field or calculated externally
+        # For simplicity, let's say you have a manually set stock quantity in the Product model
+        current_stock = product.initial_stock - total_sales  # Assume initial_stock is available in Product
+
+        # Calculate the inventory valuation (current stock * price)
+        inventory_valuation = current_stock * product.price
+
+        # Check for low stock warning
+        low_stock_warning = current_stock <= low_stock_threshold
+
+        # Append the result for this product
+        inventory_data.append({
+            'product_name': product.name,
+            'category': product.category.name,  # Include the category of the product
+            'price': product.price,  # Include the price of the product
+            'total_sales': total_sales,
+            'current_stock': current_stock,
+            'inventory_valuation': inventory_valuation,
+            'low_stock_warning': low_stock_warning
+        })
+
+    # Pass the data to the template
+    context = {
+        'inventory_data': inventory_data,
+        'low_stock_threshold': low_stock_threshold,
+    }
+
+    return render(request, 'reports/inventory_report.html', context)
