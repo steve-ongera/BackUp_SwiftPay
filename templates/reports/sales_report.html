@@ -1,0 +1,172 @@
+{% extends "pos/base.html" %}
+{% load static %}
+
+<!-- Page title -->
+{% block title %}Sales Report{% endblock title %}
+
+<!-- Specific Page CSS goes HERE -->
+{% block stylesheets %}
+<link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/pagination_buttons.css' %}" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% endblock stylesheets %}
+
+<!-- Page Heading -->
+{% block heading %}Sales Report{% endblock heading %}
+
+<!-- Page content -->
+{% block content %}
+<main role="main" class="main-content">
+    <div class="container-fluid">
+        <!-- Summary of Sales Data -->
+        <div class="row ml-0 mb-3">
+            <div class="col">
+                <h5>Total Sales Value: {{ total_sales_value|floatformat:2 }}  Ksh 
+                </h5>
+                <h5>Number of Transactions: {{ number_of_transactions }}</h5>
+            </div>
+        </div>
+
+        <!-- Top-Selling Products -->
+        <div class="card shadow mb-12">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Top-Selling Products</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Total Quantity Sold</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in top_selling_products %}
+                            <tr>
+                                <td>{{ product.product__name }}</td>
+                                <td>{{ product.total_sold }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+       <br>
+
+        <!-- Sales Report Section -->
+        <div class="card shadow mb-12">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Most Sold Items</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="salesChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+        
+        <br> 
+
+        <!-- Sales per Customer -->
+
+        <div class="card shadow mb-12">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Top 5 Customers by Items Bought</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="dataTable4" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Total Items Bought</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for customer, total_item in customers_info %}
+                            <tr>
+                                <td>{{ customer }}</td>
+                                <td>{{ total_item }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE -->
+{% block javascripts %}
+<!-- Datatables -->
+<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#dataTable').DataTable();
+        $('#dataTable2').DataTable();
+        $('#dataTable3').DataTable();
+    });
+</script>
+
+{% load static %}
+
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+<script>
+    var products = {{ products|safe }};
+    var quantities = {{ quantities|safe }};
+    var revenues = {{ revenues|safe }};  // Revenue rounded to 2 decimal places
+
+    var ctx = document.getElementById('salesChart').getContext('2d');
+    var salesChart = new Chart(ctx, {
+        type: 'bar',  // Bar chart
+        data: {
+            labels: products,  // X-axis labels (Product Names)
+            datasets: [{
+                label: 'Quantity Sold',  // Label for the Quantity Sold dataset
+                data: quantities,  // Y-axis data for quantity sold
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }, {
+                label: 'Revenue',  // Label for the Revenue dataset
+                data: revenues,  // Y-axis data for total revenue (rounded to 2 decimal places)
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,  // Make the chart responsive
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value.toFixed(2);  // Format the numbers to two decimal places
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',  // Position of the legend
+                }
+            }
+        }
+    });
+</script>
+
+
+{% endblock javascripts %}

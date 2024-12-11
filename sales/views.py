@@ -12,6 +12,8 @@ from xhtml2pdf import pisa  # Replace WeasyPrint with xhtml2pdf
 from .models import Sale, SaleDetail
 import json
 from io import BytesIO
+from django.db.models import Sum, Count
+
 
 
 # Your other functions remain the same...
@@ -199,4 +201,69 @@ def search_order(request):
     })
 
 
-#scanning 
+#sales report 
+from django.shortcuts import render
+from django.db.models import Sum
+from .models import Sale, SaleDetail
+
+def sales_report(request):
+    # Get all sales
+    sales = Sale.objects.all()
+
+    # Total Sales Value (sum of grand_total)
+    total_sales_value = sales.aggregate(total_sales=Sum('grand_total'))['total_sales'] or 0
+
+    # Number of Transactions
+    number_of_transactions = sales.count()
+
+    # Top-Selling Products (aggregate quantity from SaleDetail)
+    top_selling_products = SaleDetail.objects.values('product__name')\
+        .annotate(total_sold=Sum('quantity'))\
+        .order_by('-total_sold')[:5]
+
+    # Query to get the top 8 most sold items along with their sold quantities and revenue
+    sales_data = SaleDetail.objects.values('product__name')\
+        .annotate(
+            total_quantity_sold=Sum('quantity'),  # Sum of quantity sold
+            total_revenue=Sum('quantity') * Sum('price')  # Calculate total revenue
+        )\
+        .order_by('-total_quantity_sold')[:8]  # Order by quantity sold
+    
+    # Round the total revenue to 2 decimal places
+    for data in sales_data:
+        data['total_revenue'] = round(data['total_revenue'], 2)
+
+    # Prepare data for the graph
+    products = [data['product__name'] for data in sales_data]
+    quantities = [data['total_quantity_sold'] for data in sales_data]  # Quantities sold
+    revenues = [data['total_revenue'] for data in sales_data]  # Revenue
+
+
+    # Query to get the customers who have bought the most items
+    customers_data = SaleDetail.objects.values('sale__customer__first_name', 'sale__customer__last_name')\
+        .annotate(total_items_bought=Sum('quantity'))\
+        .order_by('-total_items_bought')[:5]  # Top 5 customers who bought the most items
+
+    # Query to get the customers who have bought the most items
+    customers_data = SaleDetail.objects.values('sale__customer__first_name', 'sale__customer__last_name')\
+        .annotate(total_items_bought=Sum('quantity'))\
+        .order_by('-total_items_bought')[:5]  # Top 5 customers who bought the most items
+
+    # Prepare data for the table in the template
+    customers_info = [
+        (f"{data['sale__customer__first_name']} {data['sale__customer__last_name']}", data['total_items_bought'])
+        for data in customers_data
+    ]
+
+    # Pass the calculated data to the template
+    context = {
+        'total_sales_value': total_sales_value,
+        'number_of_transactions': number_of_transactions,
+        'top_selling_products': top_selling_products,
+        'products': products,
+        'quantities': quantities,
+        'revenues': revenues,
+        'customers_info': customers_info,
+    }
+
+    return render(request, 'reports/sales_report.html', context)
