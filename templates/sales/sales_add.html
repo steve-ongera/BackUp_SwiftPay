@@ -188,10 +188,12 @@
             this.items.sub_total = roundTo(sub_total, 2);
             this.items.grand_total = roundTo(this.items.sub_total, 2);
             this.items.tax_amount = roundTo(this.items.sub_total * (tax_percentage / 100), 2);
+            this.items.amount_payed = roundTo(this.items.sub_total, 2);
     
             $('input[name="sub_total"]').val(this.items.sub_total);
             $('input[name="tax_amount"]').val(this.items.tax_amount);
             $('input[name="grand_total"]').val(this.items.grand_total);
+            $('input[name="amount_payed"]').val(this.items.amount_payed);
         },
         // Adds a product to the sale object
         add_product: function (item) {
